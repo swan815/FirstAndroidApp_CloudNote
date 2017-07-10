@@ -30,7 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:text="www.lsy.cn"
+        android:text="www.lousiyuan.cn"
         android:textColor="#aaaaaa"
         android:textSize="12sp" />
 
