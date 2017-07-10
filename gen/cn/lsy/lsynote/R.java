@@ -11,7 +11,9 @@ public final class R {
     public static final class attr {
     }
     public static final class color {
+        public static final int gray_light=0x7f040002;
         public static final int main_color=0x7f040000;
+        public static final int white=0x7f040001;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -25,13 +27,22 @@ public final class R {
     }
     public static final class drawable {
         public static final int cloud_note=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
+        public static final int ic_directory=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int ic_new_folder=0x7f020003;
+        public static final int ic_new_note=0x7f020004;
+        public static final int ic_sort=0x7f020005;
+        public static final int selector_popup_button=0x7f020006;
+        public static final int shape_input_folder_name=0x7f020007;
+        public static final int shape_input_search=0x7f020008;
     }
     public static final class id {
-        public static final int action_settings=0x7f090018;
+        public static final int action_settings=0x7f09001f;
         public static final int btn_login=0x7f090007;
+        public static final int btn_new_folder=0x7f09001b;
         public static final int btn_register=0x7f090011;
-        public static final int btn_start=0x7f090017;
+        public static final int btn_start=0x7f09001e;
+        public static final int et_new_folder_name=0x7f09001a;
         public static final int et_new_password=0x7f09000e;
         public static final int et_new_username=0x7f09000b;
         public static final int et_nickname=0x7f09000d;
@@ -39,14 +50,19 @@ public final class R {
         public static final int et_password_confirm=0x7f090010;
         public static final int et_username=0x7f090004;
         public static final int imageView1=0x7f090001;
+        public static final int iv_directory_item_icon=0x7f090017;
+        public static final int lv_directories=0x7f090015;
         public static final int rl_content=0x7f090002;
         public static final int rl_title_bar=0x7f090000;
         public static final int textView2=0x7f090009;
-        public static final int tv_app_logo=0x7f090015;
-        public static final int tv_app_slogan=0x7f090016;
+        public static final int tv_app_logo=0x7f09001c;
+        public static final int tv_app_slogan=0x7f09001d;
         public static final int tv_app_website=0x7f090013;
         public static final int tv_back_login=0x7f090012;
+        public static final int tv_directory_item_name=0x7f090018;
+        public static final int tv_empty_view=0x7f090016;
         public static final int tv_find_password=0x7f09000a;
+        public static final int tv_new_folder_title=0x7f090019;
         public static final int tv_nickname=0x7f09000c;
         public static final int tv_password=0x7f090005;
         public static final int tv_password_confirm=0x7f09000f;
@@ -59,9 +75,12 @@ public final class R {
         public static final int activity_main=0x7f030001;
         public static final int activity_register=0x7f030002;
         public static final int activity_splash=0x7f030003;
-        public static final int splash_01=0x7f030004;
-        public static final int splash_02=0x7f030005;
-        public static final int splash_03=0x7f030006;
+        public static final int fragment_directory_list=0x7f030004;
+        public static final int list_item_directory=0x7f030005;
+        public static final int popup_new_folder=0x7f030006;
+        public static final int splash_01=0x7f030007;
+        public static final int splash_02=0x7f030008;
+        public static final int splash_03=0x7f030009;
     }
     public static final class menu {
         public static final int login=0x7f080000;

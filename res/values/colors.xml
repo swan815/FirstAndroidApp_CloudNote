@@ -2,5 +2,9 @@
 <resources>
     
      <color name="main_color">#1296DB</color>
+     
+    
+    <color name="white">#ffffff</color>
+    <color name="gray_light">#dedede</color>
     
 </resources>

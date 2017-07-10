@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_new_folder_title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="请输入文件夹的名称"
+        android:textColor="#505050"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_new_folder_name"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginBottom="14dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_input_folder_name"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:textColor="#808080"
+        android:textSize="14sp" >
+
+        <requestFocus />
+    </EditText>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc" />
+
+    <Button
+        android:id="@+id/btn_new_folder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_popup_button"
+        android:text="创建"
+        android:textColor="#505050"
+        android:textSize="14sp" />
+
+</LinearLayout>
