@@ -14,9 +14,9 @@ import org.json.JSONObject;
 import cn.lsy.lsynote.R;
 import cn.lsy.lsynote.util.NoteApi;
 import cn.lsy.lsynote.util.ParamBuilder;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -119,10 +119,24 @@ public class LoginActivity extends BaseActivity implements NoteApi, OnClickListe
 					// 判断状态码
 					switch (state) {
 					case 0:
+						// 保存登录用户的信息，以便于后续的界面访问时使用
+						JSONObject data = jsonObject.getJSONObject("data");
+						SharedPreferences sp = getSharedPreferences("user-info", MODE_PRIVATE);
+						SharedPreferences.Editor editor = sp.edit();
+						editor.putString("id", data.getString("id"));
+						editor.putString("name", data.getString("name"));
+						editor.putString("password", data.getString("password"));
+						editor.putString("token", data.getString("token"));
+						editor.putString("nick", data.getString("nick"));
+						editor.putString("session", session);
+						editor.commit();
+						
 						// 提示
-						Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
+						Toast.makeText(LoginActivity.this, "登录成功！",
+								Toast.LENGTH_SHORT).show();
 						// 跳转到MainActivity
-						Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+						Intent intent = new Intent(LoginActivity.this,
+								MainActivity.class);
 						startActivity(intent);
 						// 把当前Activity销毁
 						finish();
@@ -148,6 +162,7 @@ public class LoginActivity extends BaseActivity implements NoteApi, OnClickListe
 	
 	static final int MESSAGE_RESPONSE_FAIL = -1;
 	static final int MESSAGE_RESPONSE_OK = 1;
+	String session;
 
 	class WorkThread extends Thread {
 		@Override
@@ -196,6 +211,13 @@ public class LoginActivity extends BaseActivity implements NoteApi, OnClickListe
 					InputStreamReader isr = new InputStreamReader(in);
 					BufferedReader br = new BufferedReader(isr);
 					String responseResult = br.readLine();
+					
+					// 获取Sesstion信息
+					String headerCookie = conn.getHeaderField("Set-Cookie");
+					session = headerCookie.split(";")[0];
+					System.out.println("response ok, session data = " + session);
+					
+					
 					// 测试结果
 					System.out.println("response result = " + responseResult);
 					// 把结果发给主线程
