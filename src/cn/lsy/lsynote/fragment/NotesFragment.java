@@ -14,85 +14,66 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import cn.lsy.lsynote.DirectoryAdapter;
-import cn.lsy.lsynote.R;
-import cn.lsy.lsynote.entity.Directory;
-import cn.lsy.lsynote.ui.MainActivity;
-import cn.lsy.lsynote.util.NoteApi;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.lsy.lsynote.DirectoryAdapter;
+import cn.lsy.lsynote.NoteAdapter;
+import cn.lsy.lsynote.R;
+import cn.lsy.lsynote.entity.Directory;
+import cn.lsy.lsynote.entity.Note;
+import cn.lsy.lsynote.util.NoteApi;
 
-public class DirectoriesFragment extends BaseFragment implements NoteApi {
+public class NotesFragment extends BaseFragment implements NoteApi {
 	
 	View view;
 	
-	ListView lvDirectories;
+	ListView lvNotes;
 	TextView tvEmptyView;
-	List<Directory> directories;
+	List<Note> notes;
 	
-	DirectoryAdapter adapter;
+	NoteAdapter adapter;
 	
 	Handler handler;
+	
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		view = inflater.inflate(R.layout.fragment_directory_list, null);
+		view = inflater.inflate(R.layout.fragment_note_list, null);
 		
-		lvDirectories = (ListView) view.findViewById(R.id.lv_directories);
-		tvEmptyView = (TextView) view.findViewById(R.id.tv_empty_view);
 		
-		directories = new ArrayList<Directory>();
-		adapter = new DirectoryAdapter(getActivity(), directories);
-		lvDirectories.setAdapter(adapter);
-		lvDirectories.setEmptyView(tvEmptyView);
+		
+		lvNotes = (ListView) view.findViewById(R.id.lv_notes);
+		tvEmptyView = (TextView) view.findViewById(R.id.tv_empty_notesview);
+		
+		//String notebookId = getArguments().getString("notebookId");
+		
+		//System.out.println(notebookId);
+		
+		
+		
+		notes = new ArrayList<Note>();
+		adapter = new NoteAdapter(getActivity(), notes); 
+		lvNotes.setAdapter(adapter);
+		lvNotes.setEmptyView(tvEmptyView);
 		
 		handler = new InnerHandler();
 		
 		//开启线程联网获取数据
 		WorkThread thread = new WorkThread();
 		thread.start();
-		
-		//点击item出现二级列表
-		
-		lvDirectories.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view, int position,
-					long id) {
-				NotesFragment notesFragment = new NotesFragment();  
-				String notebookId = directories.get(position).getId();
-				Bundle bundle = new Bundle();  
-				bundle.putString("notebookId", notebookId);  
-				notesFragment.setArguments(bundle);  
-				
-				
-                
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();  
-  
-                transaction.replace(R.id.fl_container, notesFragment);  
-                transaction.addToBackStack(null);  
-                transaction.commit();  
-				
-				
-			}
-			
-		});
 		
 		
 		
@@ -123,14 +104,14 @@ public class DirectoriesFragment extends BaseFragment implements NoteApi {
 						JSONArray dataArray = jsonObject.getJSONArray("data");
 						for (int i = 0; i < dataArray.length(); i++) {
 							JSONObject dirObject = dataArray.getJSONObject(i);
-							String name = dirObject.getString("name");
+							String title = dirObject.getString("title");
 							String id = dirObject.getString("id");
 							
-							Directory dir = new Directory();
+							Note dir = new Note();
 							dir.setId(id);
-							dir.setName(name);
+							dir.setTitle(title);
 							
-							directories.add(dir);
+							notes.add(dir);
 
 						}
 						
@@ -161,14 +142,16 @@ public class DirectoriesFragment extends BaseFragment implements NoteApi {
 					Context.MODE_PRIVATE);
 			String userId = sp.getString("id", null);
 			String session = sp.getString("session", null);
+			
+			String notebookId = getArguments().getString("notebookId");
 			// 处理提交的参数
-			String params = PARAM_USER_ID + "=" +userId;
+			String params = PARAM_NOTEBOOK_ID + "=" + notebookId;
 			// 准备联网
 			HttpURLConnection conn = null; // 网络连接
 			URL url = null; // 网址
 			
 			try {
-				url = new URL(URL_DIRECTORY_LIST + "?" +params);
+				url = new URL(URL_NOTE_LIST + "?" +params);
 				conn = (HttpURLConnection) url.openConnection(); // 创建连接的对
 				conn.setRequestMethod(METHOD_GET); // 设置请求类型
 				conn.addRequestProperty("Cookie", session);
